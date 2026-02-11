@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElternKidsLiga Hero Cards - Design Templates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --hero-primary: #FF3366;
+            --hero-secondary: #6E45E2;
+            --team-primary: #00D9FF;
+            --team-secondary: #7928CA;
+            --trophy-primary: #FFD700;
+            --trophy-secondary: #FF6B00;
+            --dark: #0A0E27;
+            --card-width: 340px;
+            --card-height: 480px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5),
+                         0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        .card-wrapper {
+            perspective: 1000px;
+        }
+
+        .card {
+            width: var(--card-width);
+            height: var(--card-height);
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) rotateX(5deg);
+            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .card:nth-child(1) { animation-delay: 0s; }
+        .card:nth-child(2) { animation-delay: 0.5s; }
+        .card:nth-child(3) { animation-delay: 1s; }
+
+        /* HERO CARD - Electric Pink/Purple */
+        .card.hero {
+            background: linear-gradient(135deg, var(--hero-primary) 0%, var(--hero-secondary) 100%);
+        }
+
+        .card.hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.03) 10px,
+                rgba(255, 255, 255, 0.03) 20px
+            );
+            animation: shimmer 20s linear infinite;
+        }
+
+        /* TEAM CARD - Cyan/Purple */
+        .card.team {
+            background: linear-gradient(135deg, var(--team-primary) 0%, var(--team-secondary) 100%);
+        }
+
+        .card.team::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+        }
+
+        /* TROPHY CARD - Gold/Orange */
+        .card.trophy {
+            background: linear-gradient(135deg, var(--trophy-primary) 0%, var(--trophy-secondary) 100%);
+            position: relative;
+        }
+
+        .card.trophy::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255, 255, 255, 0.05) 2px, rgba(255, 255, 255, 0.05) 4px),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.05) 2px, rgba(255, 255, 255, 0.05) 4px);
+            opacity: 0.3;
+        }
+
+        .card.trophy::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+            animation: holographicShine 3s ease-in-out infinite;
+        }
+
+        /* Card Header */
+        .card-header {
+            position: relative;
+            padding: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .tier-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Photo Section */
+        .photo-section {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            position: relative;
+        }
+
+        .photo-icon {
+            font-size: 4rem;
+            opacity: 0.6;
+            color: white;
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 20px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+        }
+
+        .player-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+            text-transform: uppercase;
+        }
+
+        .team-name {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 20px;
+            position: relative;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            line-height: 1;
+        }
+
+        .stat-bar {
+            height: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+            border-radius: 3px;
+            transition: width 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Footer */
+        .card-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .edition {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .qr-placeholder {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Special Effects */
+        .trophy .holographic {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.1) 75%,
+                transparent 100%
+            );
+            background-size: 200% 200%;
+            animation: holographicMove 4s linear infinite;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes holographicShine {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes holographicMove {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 200% 200%;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cards-container {
+                gap: 30px;
+            }
+
+            .card {
+                --card-width: 300px;
+                --card-height: 420px;
+            }
+        }
+
+        /* Info Section */
+        .info-section {
+            max-width: 1200px;
+            margin-top: 80px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+
+        .info-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: #0A0E27;
+            margin-bottom: 20px;
+        }
+
+        .tier-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .tier-spec {
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            border-left: 5px solid;
+        }
+
+        .tier-spec.hero { border-color: var(--hero-primary); }
+        .tier-spec.team { border-color: var(--team-primary); }
+        .tier-spec.trophy { border-color: var(--trophy-primary); }
+
+        .tier-spec h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #0A0E27;
+        }
+
+        .tier-spec ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tier-spec li {
+            padding: 8px 0;
+            color: #333;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .tier-spec li::before {
+            content: "→ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ElternKidsLiga</h1>
+        <p>Hero Card Design Templates</p>
+    </div>
+
+    <div class="cards-container">
+        <!-- HERO CARD -->
+        <div class="card-wrapper">
+            <div class="card hero">
+                <div class="card-header">
+                    <div class="tier-badge">Hero Edition</div>
+                    <div class="card-title">Berlin City League</div>
+                </div>
+                
+                <div class="photo-section">
+                    <div class="photo-placeholder">
+                        <div class="photo-icon">⚽</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <div class="player-name">Max Schmidt</div>
+                        <div class="team-name">FC Kreuzberg U12</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">Speed</div>
+                            <div class="stat-value">87</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 87%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Accuracy</div>
+                            <div class="stat-value">92</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 92%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Defense</div>
+                            <div class="stat-value">78</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 78%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Teamwork</div>
+                            <div class="stat-value">95</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="edition">February 2026</div>
+                    <div class="qr-placeholder">QR</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GAME CARD -->
+        <div class="card-wrapper">
+            <div class="card team">
+                <div class="card-header">
+                    <div class="tier-badge">Game Edition</div>
+                    <div class="card-title">Saturday Night Showdown</div>
+                </div>
+                
+                <div class="photo-section">
+                    <div class="photo-placeholder">
+                        <div class="photo-icon">⚡</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <div class="player-name">Victory Match</div>
+                        <div class="team-name">Kreuzberg Park • 12 Players</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">Final Score</div>
+                            <div class="stat-value">5-3</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 85%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Your Goals</div>
+                            <div class="stat-value">2</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 75%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Position</div>
+                            <div class="stat-value">FWD</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Match MVP</div>
+                            <div class="stat-value">⭐</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 95%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="edition">Feb 8, 2026</div>
+                    <div class="qr-placeholder">QR</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TROPHY CARD -->
+        <div class="card-wrapper">
+            <div class="card trophy">
+                <div class="holographic"></div>
+                <div class="card-header">
+                    <div class="tier-badge">🏆 Champion</div>
+                    <div class="card-title">City Champion</div>
+                </div>
+                
+                <div class="photo-section">
+                    <div class="photo-placeholder">
+                        <div class="photo-icon">👑</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <div class="player-name">Sophie Müller</div>
+                        <div class="team-name">Berlin League Champion</div>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-label">MVP Score</div>
+                            <div class="stat-value">98</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 98%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Championships</div>
+                            <div class="stat-value">3</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Match Rating</div>
+                            <div class="stat-value">9.4</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 94%;"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">Legendary</div>
+                            <div class="stat-value">★★★</div>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="edition">Limited Edition</div>
+                    <div class="qr-placeholder">QR</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h2>Card Tier Specifications</h2>
+        
+        <div class="tier-specs">
+            <div class="tier-spec hero">
+                <h3>Hero Card</h3>
+                <ul>
+                    <li><strong>Availability:</strong> Every registered player</li>
+                    <li><strong>Purpose:</strong> Individual player profile and stats</li>
+                    <li><strong>Updates:</strong> Stats auto-update after each match</li>
+                    <li><strong>Physical Drop:</strong> Monthly edition with updated stats</li>
+                    <li><strong>Digital Access:</strong> Instant via app after registration</li>
+                    <li><strong>QR Code:</strong> Links to registration + viral loop</li>
+                    <li><strong>Color Scheme:</strong> Electric Pink/Purple gradient</li>
+                </ul>
+            </div>
+
+            <div class="tier-spec team">
+                <h3>Game Card</h3>
+                <ul>
+                    <li><strong>Unlock Requirement:</strong> Participate in any organized match</li>
+                    <li><strong>Purpose:</strong> Collectible memory of specific games played</li>
+                    <li><strong>Flexibility:</strong> Play with anyone, anywhere - still get rewarded</li>
+                    <li><strong>Physical Drop:</strong> Monthly batch includes all games from that period</li>
+                    <li><strong>Digital Access:</strong> Instant after match organizer reports results</li>
+                    <li><strong>Card Details:</strong> Game name, date, location, score, your role & stats</li>
+                    <li><strong>Color Scheme:</strong> Cyan/Purple gradient</li>
+                </ul>
+            </div>
+
+            <div class="tier-spec trophy">
+                <h3>Trophy Card</h3>
+                <ul>
+                    <li><strong>Unlock Requirement:</strong> Win city league championship</li>
+                    <li><strong>Rarity:</strong> Limited holographic edition</li>
+                    <li><strong>Purpose:</strong> Elite status symbol and bragging rights</li>
+                    <li><strong>Physical Drop:</strong> Special holographic finish</li>
+                    <li><strong>Digital Access:</strong> Permanent achievement badge</li>
+                    <li><strong>Scarcity:</strong> Only 1 champion per city/season</li>
+                    <li><strong>Color Scheme:</strong> Gold/Orange with holographic overlay</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
